@@ -1,4 +1,4 @@
-FROM golang:1.24.3-alpine AS build
+FROM golang:1.24.4-alpine AS build
 ARG VERSION="dev"
 
 # Set the working directory
@@ -22,5 +22,7 @@ FROM gcr.io/distroless/base-debian12
 WORKDIR /server
 # Copy the binary from the build stage
 COPY --from=build /bin/github-mcp-server .
-# Command to run the server
-CMD ["./github-mcp-server", "stdio"]
+# Set the entrypoint to the server binary
+ENTRYPOINT ["/server/github-mcp-server"]
+# Default arguments for ENTRYPOINT
+CMD ["stdio"]
